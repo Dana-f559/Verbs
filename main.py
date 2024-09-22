@@ -1,15 +1,14 @@
 from bs4 import BeautifulSoup, element
-import requests
 import csv
+import requests
 import sys
 import tabulate
 
 def main():
     
     if len(sys.argv) == 3 and sys.argv[2] == "-d":
-        
         display_verbs_tabulate(filename=sys.argv[1])
-        sys.exit()
+        return
 
     elif len(sys.argv) == 3 and sys.argv[2] == "-s":
         verb = input("Enter verb you are searching for (in infinitive): ")
@@ -18,7 +17,7 @@ def main():
             print(tabulate_one_verb(verbs=verbs, verb=verb))
         else:
             print("No")
-        sys.exit()
+        return
 
     if len(sys.argv) != 2:
         sys.exit("Ussage: python `filename.csv`")
@@ -112,7 +111,7 @@ def get_csv_file_all_verbs(filename:str)->dict:
 
     return verbs
 
-def dictVerbs_into_list(verbs:dict, n:int) -> list:
+def dict_into_list(verbs:dict, n:int) -> list:
     verbs_list = []
 
     for i in range(0, len(verbs.keys()), n):
@@ -127,7 +126,7 @@ def dictVerbs_into_list(verbs:dict, n:int) -> list:
 def display_verbs_tabulate(filename:str) -> None:
     verbs = get_csv_file_all_verbs(filename=filename)
 
-    verbs_list = dictVerbs_into_list(verbs, 10)
+    verbs_list = dict_into_list(verbs, 10)
 
     for verb in verbs_list:
 
